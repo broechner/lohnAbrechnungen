@@ -11,7 +11,7 @@ export const employeeSchema = z.object({
   nationality: z.string().optional().nullable(),
   ahvNumber: z
     .string()
-    .regex(/^756\\.[0-9]{4}\\.[0-9]{4}\\.[0-9]{2}$/, \"AHV number must match 756.XXXX.XXXX.XX\"),
+    .regex(/^756\.[0-9]{4}\.[0-9]{4}\.[0-9]{2}$/, "AHV number must match 756.XXXX.XXXX.XX"),
   maritalStatus: z.string().optional().nullable(),
   childrenCount: z.number().int().optional().nullable(),
   email: z.string().email().optional().nullable(),
