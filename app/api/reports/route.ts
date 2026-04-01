@@ -13,7 +13,7 @@ export const GET = async (request: Request) => {
   }
 
   const runs = await prisma.payrollRun.findMany({ where: { period } });
-  const snapshots = runs.map((run) => JSON.parse(run.snapshotJson));
+  const snapshots = runs.map((run: { snapshotJson: string }) => JSON.parse(run.snapshotJson));
   const totals = summarizePayroll(snapshots);
 
   if (format === "csv") {
@@ -36,7 +36,7 @@ export const GET = async (request: Request) => {
   if (format === "pdf") {
     const locale = (searchParams.get("locale") ?? "de") === "en" ? "en" : "de";
     const pdfBytes = await generateReportPdf({ period, totals, locale });
-    return new NextResponse(pdfBytes, {
+    return new NextResponse(Buffer.from(pdfBytes), {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useLocale } from "./useLocale";
 import { useTheme } from "./useTheme";
 import { getString } from "./i18n";
@@ -8,6 +9,7 @@ import { getString } from "./i18n";
 export const TopNav = () => {
   const { locale, setLocale } = useLocale();
   const { theme, setTheme } = useTheme();
+  const { data: session, status } = useSession();
 
   return (
     <header className="border-b border-neutral-800 bg-neutral-950/90 backdrop-blur">
@@ -40,6 +42,26 @@ export const TopNav = () => {
             <option value="de">Deutsch</option>
             <option value="en">English</option>
           </select>
+          {status === "authenticated" ? (
+            <>
+              <span className="hidden text-neutral-300 md:inline">{session.user?.email}</span>
+              <button
+                type="button"
+                className="rounded-full border border-neutral-700 px-3 py-1"
+                onClick={() => signOut({ callbackUrl: "/signin" })}
+              >
+                Sign out
+              </button>
+            </>
+          ) : (
+            <button
+              type="button"
+              className="rounded-full border border-neutral-700 px-3 py-1"
+              onClick={() => signIn("google", { callbackUrl: "/" })}
+            >
+              Sign in
+            </button>
+          )}
         </div>
       </div>
     </header>

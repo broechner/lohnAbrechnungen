@@ -21,7 +21,7 @@ export const POST = async (request: Request) => {
     locale: body.locale ?? "de"
   });
 
-  return new NextResponse(pdfBytes, {
+  return new NextResponse(Buffer.from(pdfBytes), {
     status: 200,
     headers: {
       "Content-Type": "application/pdf",
