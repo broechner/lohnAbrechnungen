@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Employer {
+  id        String   @id @default(cuid())
+  name      String
+  street    String
+  zip       String
+  city      String
+  country   String   @default("CH")
+  email     String?
+  phone     String?
+  createdBy String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  contracts EmploymentContract[]
+}
+
+model Employee {
+  id           String   @id @default(cuid())
+  firstName    String
+  lastName     String
+  street       String
+  zip          String
+  city         String
+  country      String   @default("CH")
+  dateOfBirth  DateTime
+  nationality  String?
+  ahvNumber    String
+  maritalStatus String?
+  childrenCount Int?
+  email        String?
+  phone        String?
+  createdBy    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  contracts    EmploymentContract[]
+  timeEntries  TimeEntry[]
+  payrollRuns  PayrollRun[]
+}
+
+model EmploymentContract {
+  id                 String   @id @default(cuid())
+  employeeId         String
+  employerId         String
+  startDate          DateTime
+  endDate            DateTime?
+  hourlyWageRappen   Int
+  monthlySalaryRappen Int?
+  vacationPayIncluded Boolean  @default(false)
+  vacationPayRateBps Int       @default(833)
+  ahvIveoRateBps     Int       @default(530)
+  alvRateBps         Int       @default(110)
+  additionalDeductionLabel String?
+  additionalDeductionRateBps Int?
+  quellensteuerEnabled Boolean @default(false)
+  quellensteuerRateBps Int?
+  roundingIncrementRappen Int  @default(5)
+  createdBy          String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  changeLog          ContractRateChange[]
+  employee           Employee @relation(fields: [employeeId], references: [id])
+  employer           Employer @relation(fields: [employerId], references: [id])
+  payrollRuns        PayrollRun[]
+}
+
+model ContractRateChange {
+  id            String   @id @default(cuid())
+  contractId    String
+  effectiveFrom DateTime
+  payloadJson   String
+  createdBy     String?
+  createdAt     DateTime @default(now())
+  contract      EmploymentContract @relation(fields: [contractId], references: [id])
+}
+
+model TimeEntry {
+  id           String   @id @default(cuid())
+  employeeId   String
+  contractId   String
+  period       String
+  hoursWorked  Float
+  bonusRappen  Int      @default(0)
+  reimbursementRappen Int @default(0)
+  deductionRappen Int @default(0)
+  createdBy    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  employee     Employee @relation(fields: [employeeId], references: [id])
+  contract     EmploymentContract @relation(fields: [contractId], references: [id])
+}
+
+model PayrollRun {
+  id           String   @id @default(cuid())
+  employeeId   String
+  contractId   String
+  period       String
+  snapshotJson String
+  pdfPath      String?
+  createdBy    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  employee     Employee @relation(fields: [employeeId], references: [id])
+  contract     EmploymentContract @relation(fields: [contractId], references: [id])
+}
