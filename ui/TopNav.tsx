@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useLocale } from "./useLocale";
 import { useTheme } from "./useTheme";
 import { getString } from "./i18n";
@@ -54,13 +54,9 @@ export const TopNav = () => {
               </button>
             </>
           ) : (
-            <button
-              type="button"
-              className="rounded-full border border-neutral-700 px-3 py-1"
-              onClick={() => signIn("google", { callbackUrl: "/" })}
-            >
+            <Link href="/signin" className="rounded-full border border-neutral-700 px-3 py-1">
               Sign in
-            </button>
+            </Link>
           )}
         </div>
       </div>

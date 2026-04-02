@@ -4,6 +4,10 @@ import GoogleProvider from "next-auth/providers/google";
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const allowedDomain = process.env.GOOGLE_ALLOWED_DOMAIN;
+const allowedEmails = (process.env.GOOGLE_ALLOWED_EMAILS ?? "")
+  .split(",")
+  .map((value) => value.trim().toLowerCase())
+  .filter(Boolean);
 
 export const authOptions: NextAuthOptions = {
   providers:
@@ -20,7 +24,8 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt"
   },
   pages: {
-    signIn: "/signin"
+    signIn: "/signin",
+    error: "/signin"
   },
   callbacks: {
     async signIn({ profile }) {
@@ -28,8 +33,14 @@ export const authOptions: NextAuthOptions = {
         return false;
       }
 
+      const email = profile.email.toLowerCase();
+
+      if (allowedEmails.length > 0) {
+        return allowedEmails.includes(email);
+      }
+
       if (allowedDomain) {
-        const emailDomain = profile.email.split("@").at(1)?.toLowerCase();
+        const emailDomain = email.split("@").at(1)?.toLowerCase();
         return emailDomain === allowedDomain.toLowerCase();
       }
 
