@@ -4,39 +4,43 @@
 
 :root {
   color-scheme: dark;
+  --abbi-blue: #0170c1;
+  --abbi-blue-700: #015a9a;
+  --abbi-blue-900: #00395f;
+  --abbi-blue-300: #7eb9e5;
+  --abbi-blue-100: #e6f2fa;
   --brand-orange: #ff5800;
-  --brand-orange-strong: #d94700;
-  --brand-orange-soft: #ff8f57;
-  --brand-ink: #121212;
-  --brand-panel: rgba(28, 28, 28, 0.78);
-  --brand-panel-border: rgba(255, 88, 0, 0.18);
-  --brand-light-bg: #fff8f3;
-  --brand-light-panel: rgba(255, 255, 255, 0.88);
+  --brand-orange-soft: #ff8a4a;
+  --brand-ink: #101820;
+  --brand-panel: rgba(16, 24, 32, 0.76);
+  --brand-panel-border: rgba(1, 112, 193, 0.22);
+  --brand-light-bg: #f8fbfd;
+  --brand-light-panel: rgba(255, 255, 255, 0.96);
 }
 
 html {
   min-height: 100%;
   background:
-    radial-gradient(circle at top right, rgba(255, 88, 0, 0.22), transparent 28%),
-    radial-gradient(circle at top left, rgba(255, 143, 87, 0.16), transparent 22%),
-    linear-gradient(180deg, #111111 0%, #181818 100%);
+    radial-gradient(circle at top left, rgba(1, 112, 193, 0.2), transparent 30%),
+    radial-gradient(circle at top right, rgba(126, 185, 229, 0.14), transparent 28%),
+    linear-gradient(180deg, #0d141b 0%, #101820 100%);
 }
 
 body {
   @apply text-neutral-100;
   min-height: 100vh;
   background:
-    radial-gradient(circle at top right, rgba(255, 88, 0, 0.2), transparent 26%),
-    linear-gradient(180deg, rgba(18, 18, 18, 0.92) 0%, rgba(12, 12, 12, 0.98) 100%);
-  font-family: "Segoe UI Light", "Segoe UI", "Segoe UI Variable", Tahoma, Geneva, Verdana, sans-serif;
+    radial-gradient(circle at top left, rgba(1, 112, 193, 0.18), transparent 28%),
+    linear-gradient(180deg, rgba(16, 24, 32, 0.95) 0%, rgba(10, 16, 22, 0.98) 100%);
+  font-family: "Segoe UI Variable", "Segoe UI", "Segoe UI Light", Tahoma, Calibri, Arial, sans-serif;
   font-weight: 300;
 }
 
 .light body {
   @apply text-neutral-900;
   background:
-    radial-gradient(circle at top right, rgba(255, 88, 0, 0.12), transparent 24%),
-    linear-gradient(180deg, var(--brand-light-bg) 0%, #fffdfb 100%);
+    radial-gradient(circle at top left, rgba(1, 112, 193, 0.1), transparent 22%),
+    linear-gradient(180deg, var(--brand-light-bg) 0%, #ffffff 38%, #f8fafc 100%);
 }
 
 h1,
@@ -45,7 +49,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Segoe UI", "Segoe UI Variable", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI Variable", "Segoe UI", Tahoma, Arial, sans-serif;
   font-weight: 300;
   letter-spacing: -0.02em;
 }
@@ -60,7 +64,7 @@ textarea {
 }
 
 ::selection {
-  background: rgba(255, 88, 0, 0.28);
+  background: rgba(1, 112, 193, 0.28);
   color: inherit;
 }
 
@@ -74,8 +78,8 @@ input:focus,
 select:focus,
 textarea:focus {
   outline: none;
-  border-color: rgba(255, 88, 0, 0.7);
-  box-shadow: 0 0 0 4px rgba(255, 88, 0, 0.12);
+  border-color: rgba(1, 112, 193, 0.72);
+  box-shadow: 0 0 0 4px rgba(1, 112, 193, 0.14);
 }
 
 .light input,
@@ -87,23 +91,27 @@ textarea:focus {
 .brand-panel {
   background: var(--brand-panel);
   border: 1px solid var(--brand-panel-border);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 20px 52px rgba(1, 112, 193, 0.14);
   backdrop-filter: blur(16px);
 }
 
 .light .brand-panel {
   background: var(--brand-light-panel);
-  border-color: rgba(255, 88, 0, 0.16);
-  box-shadow: 0 18px 40px rgba(77, 46, 24, 0.08);
+  border-color: rgba(1, 112, 193, 0.14);
+  box-shadow: 0 12px 28px rgba(16, 24, 32, 0.08);
 }
 
 .brand-grid {
   background-image:
-    linear-gradient(rgba(255, 88, 0, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 88, 0, 0.08) 1px, transparent 1px);
+    linear-gradient(rgba(1, 112, 193, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(1, 112, 193, 0.08) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
 .brand-accent-text {
+  color: var(--abbi-blue-300);
+}
+
+.brand-orange-text {
   color: var(--brand-orange-soft);
 }
