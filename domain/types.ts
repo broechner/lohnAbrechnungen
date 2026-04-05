@@ -58,11 +58,23 @@ export type TimeEntry = {
   employeeId: string;
   contractId: string;
   period: string;
+  workDate: Date;
   hoursWorked: number;
   bonusRappen: CurrencyRappen;
   reimbursementRappen: CurrencyRappen;
   deductionRappen: CurrencyRappen;
 } & AuditFields;
+
+export type ContractDocument = {
+  id: string;
+  contractId: string;
+  filename: string;
+  mimeType: string;
+  sizeBytes: number;
+  storagePath: string;
+  createdBy?: string | null;
+  createdAt: Date;
+};
 
 export type PayrollSnapshot = {
   period: string;

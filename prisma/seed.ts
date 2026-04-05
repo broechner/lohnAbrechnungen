@@ -11,7 +11,8 @@ async function main() {
       city: "Zürich",
       country: "CH",
       email: "demo@lohnabrechnung.app",
-      phone: "+41 44 000 00 00"
+      phone: "+41 44 000 00 00",
+      createdBy: "demo@lohnabrechnung.app"
     }
   });
 
@@ -29,7 +30,8 @@ async function main() {
       maritalStatus: "ledig",
       childrenCount: 0,
       email: "rebecca@example.com",
-      phone: "+41 79 000 00 00"
+      phone: "+41 79 000 00 00",
+      createdBy: "demo@lohnabrechnung.app"
     }
   });
 
@@ -43,7 +45,8 @@ async function main() {
       vacationPayRateBps: 833,
       ahvIveoRateBps: 530,
       alvRateBps: 110,
-      roundingIncrementRappen: 5
+      roundingIncrementRappen: 5,
+      createdBy: "demo@lohnabrechnung.app"
     }
   });
 
@@ -52,7 +55,9 @@ async function main() {
       employeeId: employee.id,
       contractId: contract.id,
       period: "2026-01",
-      hoursWorked: 4.25
+      workDate: new Date("2026-01-05"), // Updated workDate
+      hoursWorked: 4.25,
+      createdBy: "demo@lohnabrechnung.app"
     }
   });
 }

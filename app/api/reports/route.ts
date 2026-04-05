@@ -2,8 +2,15 @@ import { NextResponse } from "next/server";
 import { prisma } from "../../../data-access/prisma";
 import { summarizePayroll } from "../../../payroll-engine/report";
 import { generateReportPdf } from "../../../pdf/generateReportPdf";
+import { getRequestUserEmail } from "../../../api/requestAuth";
+import { periodSchema } from "../../../api/validators";
 
 export const GET = async (request: Request) => {
+  const userEmail = await getRequestUserEmail();
+  if (!userEmail) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const { searchParams } = new URL(request.url);
   const period = searchParams.get("period");
   const format = searchParams.get("format") ?? "json";
@@ -12,9 +19,30 @@ export const GET = async (request: Request) => {
     return NextResponse.json({ error: "period is required" }, { status: 400 });
   }
 
-  const runs = await prisma.payrollRun.findMany({ where: { period } });
+  const validatedPeriod = periodSchema.safeParse(period);
+  if (!validatedPeriod.success) {
+    return NextResponse.json({ error: "period must be in YYYY-MM format" }, { status: 400 });
+  }
+
+  const runs = await prisma.payrollRun.findMany({
+    where: { period, createdBy: userEmail },
+    include: { employee: true }
+  });
   const snapshots = runs.map((run: { snapshotJson: string }) => JSON.parse(run.snapshotJson));
   const totals = summarizePayroll(snapshots);
+
+  const totalsByEmployee = runs.reduce<Record<string, { grossWageRappen: number; roundedNetWageRappen: number }>>(
+    (acc, run) => {
+      const snapshot = JSON.parse(run.snapshotJson) as { grossWageRappen: number; roundedNetWageRappen: number };
+      const label = `${run.employee.firstName} ${run.employee.lastName}`;
+      acc[label] = {
+        grossWageRappen: (acc[label]?.grossWageRappen ?? 0) + snapshot.grossWageRappen,
+        roundedNetWageRappen: (acc[label]?.roundedNetWageRappen ?? 0) + snapshot.roundedNetWageRappen
+      };
+      return acc;
+    },
+    {}
+  );
 
   if (format === "csv") {
     const header = "metric,amountRappen";
@@ -45,5 +73,14 @@ export const GET = async (request: Request) => {
     });
   }
 
-  return NextResponse.json({ period, totals });
+  if (format !== "json") {
+    return NextResponse.json({ error: "Unsupported format" }, { status: 400 });
+  }
+
+  return NextResponse.json({
+    period,
+    totals,
+    totalsByEmployee,
+    runCount: runs.length
+  });
 };

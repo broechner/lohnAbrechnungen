@@ -29,6 +29,7 @@ const entry: TimeEntry = {
   employeeId: "employee-1",
   contractId: "contract-1",
   period: "2026-01",
+  workDate: new Date("2026-01-05"),
   hoursWorked: 4.25,
   bonusRappen: 0,
   reimbursementRappen: 0,
@@ -45,6 +46,6 @@ describe("calculatePayslip", () => {
     expect(snapshot.baseWageRappen).toBe(14612);
     expect(snapshot.vacationPayRappen).toBe(1217);
     expect(snapshot.grossWageRappen).toBe(15829);
-    expect(snapshot.roundedNetWageRappen).toBe(14025);
+    expect(snapshot.roundedNetWageRappen).toBe(14820);
   });
 });

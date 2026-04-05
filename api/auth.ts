@@ -4,6 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const allowedDomain = process.env.GOOGLE_ALLOWED_DOMAIN;
+const allowAnyGoogleUser = process.env.AUTH_ALLOW_ANY_GOOGLE_USER === "true";
 const allowedEmails = (process.env.GOOGLE_ALLOWED_EMAILS ?? "")
   .split(",")
   .map((value) => value.trim().toLowerCase())
@@ -44,7 +45,8 @@ export const authOptions: NextAuthOptions = {
         return emailDomain === allowedDomain.toLowerCase();
       }
 
-      return true;
+      // Fail closed by default. Explicitly set AUTH_ALLOW_ANY_GOOGLE_USER=true to allow all Google accounts.
+      return allowAnyGoogleUser;
     },
     async session({ session, token }) {
       if (session.user) {

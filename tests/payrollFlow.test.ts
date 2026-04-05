@@ -3,7 +3,7 @@ import type { EmploymentContract, Employee, Employer, TimeEntry } from "../domai
 
 vi.mock("../data-access/repositories", () => ({
   payrollRunRepository: {
-    create: vi.fn().mockResolvedValue({ id: "run-1" })
+    upsertByUniquePeriod: vi.fn().mockResolvedValue({ id: "run-1" })
   }
 }));
 
@@ -70,6 +70,7 @@ const entry: TimeEntry = {
   employeeId: employee.id,
   contractId: contract.id,
   period: "2026-01",
+  workDate: new Date("2026-01-05"),
   hoursWorked: 4.25,
   bonusRappen: 0,
   reimbursementRappen: 0,
@@ -86,7 +87,8 @@ describe("payroll flow", () => {
       employer,
       contract,
       timeEntry: entry,
-      locale: "de"
+      locale: "de",
+      createdBy: "demo@example.com"
     });
 
     expect(result.snapshot.period).toBe("2026-01");

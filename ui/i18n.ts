@@ -16,11 +16,16 @@ export const uiStrings: Record<Locale, Record<string, string>> = {
     contracts: "Verträge",
     timeEntries: "Stundenerfassung",
     reports: "Lohndeklaration",
+    payslips: "Lohnzettel",
     darkMode: "Dark Mode",
     language: "Sprache",
     exportPdf: "PDF herunterladen",
     shareWhatsapp: "WhatsApp öffnen",
-    mailDraft: "E-Mail Entwurf öffnen"
+    mailDraft: "E-Mail Entwurf öffnen",
+    save: "Speichern",
+    remove: "Löschen",
+    upload: "Hochladen",
+    refresh: "Aktualisieren"
   },
   en: {
     appName: "LohnAbrechnungsApp",
@@ -37,11 +42,16 @@ export const uiStrings: Record<Locale, Record<string, string>> = {
     contracts: "Contracts",
     timeEntries: "Time entries",
     reports: "Payroll report",
+    payslips: "Payslips",
     darkMode: "Dark mode",
     language: "Language",
     exportPdf: "Download PDF",
     shareWhatsapp: "Open WhatsApp",
-    mailDraft: "Open email draft"
+    mailDraft: "Open email draft",
+    save: "Save",
+    remove: "Delete",
+    upload: "Upload",
+    refresh: "Refresh"
   }
 };
 

@@ -13,22 +13,25 @@ export const createPayslip = async ({
   employer,
   contract,
   timeEntry,
-  locale
+  locale,
+  createdBy
 }: {
   employee: Employee;
   employer: Employer;
   contract: EmploymentContract;
   timeEntry: TimeEntry;
   locale: "de" | "en";
+  createdBy: string;
 }): Promise<GeneratedPayslip> => {
   const snapshot = calculatePayslip({ contract, timeEntry, locale: locale === "de" ? "de-CH" : "en-GB" });
   const pdfBytes = await generatePayslipPdf({ snapshot, employee, employer, contract, locale });
 
-  await payrollRunRepository.create({
+  await payrollRunRepository.upsertByUniquePeriod({
     employeeId: employee.id,
     contractId: contract.id,
     period: snapshot.period,
-    snapshotJson: JSON.stringify(snapshot)
+    snapshotJson: JSON.stringify(snapshot),
+    createdBy
   });
 
   return { snapshot, pdfBytes };

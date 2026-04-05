@@ -13,8 +13,10 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
     <html lang="de" className="dark">
       <body>
         <AuthProvider>
-          <TopNav />
-          <main className="mx-auto max-w-6xl px-6 py-8">{children}</main>
+          <div className="brand-grid min-h-screen">
+            <TopNav />
+            <main className="mx-auto max-w-6xl px-6 py-8">{children}</main>
+          </div>
         </AuthProvider>
       </body>
     </html>

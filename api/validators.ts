@@ -18,9 +18,13 @@ export const employeeSchema = z.object({
   phone: z.string().optional().nullable()
 });
 
+export const employeeUpdateSchema = employeeSchema.partial().extend({
+  id: z.string().min(1).optional()
+});
+
 export const contractSchema = z.object({
   employeeId: z.string().min(1),
-  employerId: z.string().min(1),
+  employerId: z.string().optional().nullable(),
   startDate: z.string().min(1),
   endDate: z.string().optional().nullable(),
   hourlyWageRappen: z.number().int().min(0),
@@ -40,8 +44,28 @@ export const timeEntrySchema = z.object({
   employeeId: z.string().min(1),
   contractId: z.string().min(1),
   period: z.string().regex(/^\d{4}-\d{2}$/),
+  workDate: z.string().min(1),
   hoursWorked: z.number().min(0),
   bonusRappen: z.number().int().optional().default(0),
   reimbursementRappen: z.number().int().optional().default(0),
   deductionRappen: z.number().int().optional().default(0)
+});
+
+export const timeEntryUpdateSchema = timeEntrySchema.partial().extend({
+  id: z.string().min(1).optional()
+});
+
+export const payrollRequestSchema = z.object({
+  timeEntryId: z.string().min(1),
+  locale: z.enum(["de", "en"]).optional()
+});
+
+export const periodSchema = z.string().regex(/^\d{4}-\d{2}$/);
+
+export const contractDocumentSchema = z.object({
+  contractId: z.string().min(1),
+  filename: z.string().min(1),
+  mimeType: z.string().min(1),
+  sizeBytes: z.number().int().nonnegative(),
+  storagePath: z.string().min(1)
 });

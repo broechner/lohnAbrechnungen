@@ -4,12 +4,106 @@
 
 :root {
   color-scheme: dark;
+  --brand-orange: #ff5800;
+  --brand-orange-strong: #d94700;
+  --brand-orange-soft: #ff8f57;
+  --brand-ink: #121212;
+  --brand-panel: rgba(28, 28, 28, 0.78);
+  --brand-panel-border: rgba(255, 88, 0, 0.18);
+  --brand-light-bg: #fff8f3;
+  --brand-light-panel: rgba(255, 255, 255, 0.88);
+}
+
+html {
+  min-height: 100%;
+  background:
+    radial-gradient(circle at top right, rgba(255, 88, 0, 0.22), transparent 28%),
+    radial-gradient(circle at top left, rgba(255, 143, 87, 0.16), transparent 22%),
+    linear-gradient(180deg, #111111 0%, #181818 100%);
 }
 
 body {
-  @apply bg-neutral-950 text-neutral-100;
+  @apply text-neutral-100;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top right, rgba(255, 88, 0, 0.2), transparent 26%),
+    linear-gradient(180deg, rgba(18, 18, 18, 0.92) 0%, rgba(12, 12, 12, 0.98) 100%);
+  font-family: "Segoe UI Light", "Segoe UI", "Segoe UI Variable", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 300;
 }
 
 .light body {
-  @apply bg-neutral-50 text-neutral-900;
+  @apply text-neutral-900;
+  background:
+    radial-gradient(circle at top right, rgba(255, 88, 0, 0.12), transparent 24%),
+    linear-gradient(180deg, var(--brand-light-bg) 0%, #fffdfb 100%);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Segoe UI", "Segoe UI Variable", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+}
+
+a,
+button,
+input,
+select,
+textarea {
+  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+::selection {
+  background: rgba(255, 88, 0, 0.28);
+  color: inherit;
+}
+
+input,
+select,
+textarea {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: rgba(255, 88, 0, 0.7);
+  box-shadow: 0 0 0 4px rgba(255, 88, 0, 0.12);
+}
+
+.light input,
+.light select,
+.light textarea {
+  box-shadow: inset 0 1px 0 rgba(18, 18, 18, 0.04);
+}
+
+.brand-panel {
+  background: var(--brand-panel);
+  border: 1px solid var(--brand-panel-border);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(16px);
+}
+
+.light .brand-panel {
+  background: var(--brand-light-panel);
+  border-color: rgba(255, 88, 0, 0.16);
+  box-shadow: 0 18px 40px rgba(77, 46, 24, 0.08);
+}
+
+.brand-grid {
+  background-image:
+    linear-gradient(rgba(255, 88, 0, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 88, 0, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.brand-accent-text {
+  color: var(--brand-orange-soft);
 }

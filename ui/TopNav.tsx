@@ -12,32 +12,56 @@ export const TopNav = () => {
   const { data: session, status } = useSession();
 
   return (
-    <header className="border-b border-neutral-800 bg-neutral-950/90 backdrop-blur">
+    <header className="border-b border-[rgba(255,88,0,0.16)] bg-[linear-gradient(90deg,rgba(15,15,15,0.95),rgba(34,20,12,0.92))] backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <div className="flex items-center gap-6">
-          <Link href="/" className="text-lg font-semibold">
-            {getString(locale, "appName")}
+          <Link href="/" className="flex items-center gap-3 text-lg text-white">
+            <span className="grid h-10 w-10 place-items-center rounded-2xl bg-accent-gradient shadow-[0_12px_30px_rgba(255,88,0,0.28)]">
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.7">
+                <path d="M5 18h14" />
+                <path d="M5 12h10" />
+                <path d="M5 6h14" />
+                <circle cx="17" cy="12" r="2.2" fill="currentColor" stroke="none" />
+              </svg>
+            </span>
+            <span className="leading-tight">
+              <span className="block font-light tracking-[0.08em] text-[0.72rem] uppercase text-[rgba(255,143,87,0.95)]">Avanade</span>
+              <span className="block font-light">{getString(locale, "appName")}</span>
+            </span>
           </Link>
-          <nav className="flex items-center gap-4 text-sm text-neutral-300">
-            <Link href="/employees">{getString(locale, "employees")}</Link>
-            <Link href="/contracts">{getString(locale, "contracts")}</Link>
-            <Link href="/time-entries">{getString(locale, "timeEntries")}</Link>
-            <Link href="/reports">{getString(locale, "reports")}</Link>
-            <Link href="/settings">{getString(locale, "settings")}</Link>
+          <nav className="flex items-center gap-2 text-sm text-neutral-200">
+            <Link href="/employees" className="rounded-full px-3 py-1.5 hover:bg-[rgba(255,88,0,0.12)] hover:text-white">{getString(locale, "employees")}</Link>
+            <Link href="/contracts" className="rounded-full px-3 py-1.5 hover:bg-[rgba(255,88,0,0.12)] hover:text-white">{getString(locale, "contracts")}</Link>
+            <Link href="/time-entries" className="rounded-full px-3 py-1.5 hover:bg-[rgba(255,88,0,0.12)] hover:text-white">{getString(locale, "timeEntries")}</Link>
+            <Link href="/payslips" className="rounded-full px-3 py-1.5 hover:bg-[rgba(255,88,0,0.12)] hover:text-white">{getString(locale, "payslips")}</Link>
+            <Link href="/reports" className="rounded-full px-3 py-1.5 hover:bg-[rgba(255,88,0,0.12)] hover:text-white">{getString(locale, "reports")}</Link>
+            <Link href="/settings" className="rounded-full px-3 py-1.5 hover:bg-[rgba(255,88,0,0.12)] hover:text-white">{getString(locale, "settings")}</Link>
           </nav>
         </div>
         <div className="flex items-center gap-4 text-sm">
           <button
             type="button"
-            className="rounded-full border border-neutral-700 px-3 py-1"
+            aria-label={getString(locale, "darkMode")}
+            title={getString(locale, "darkMode")}
+            className="grid h-9 w-9 place-items-center rounded-full border border-[rgba(255,88,0,0.24)] bg-[rgba(255,255,255,0.03)] text-[rgba(255,143,87,0.95)]"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           >
-            {getString(locale, "darkMode")}: {theme === "dark" ? "On" : "Off"}
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2.5v3" />
+              <path d="M12 18.5v3" />
+              <path d="M2.5 12h3" />
+              <path d="M18.5 12h3" />
+              <path d="m5.4 5.4 2.1 2.1" />
+              <path d="m16.5 16.5 2.1 2.1" />
+              <path d="m18.6 5.4-2.1 2.1" />
+              <path d="m7.5 16.5-2.1 2.1" />
+            </svg>
           </button>
           <select
             value={locale}
             onChange={(event) => setLocale(event.target.value === "en" ? "en" : "de")}
-            className="rounded-md border border-neutral-700 bg-neutral-900 px-2 py-1"
+            className="rounded-full border border-[rgba(255,88,0,0.18)] bg-[rgba(255,255,255,0.03)] px-3 py-1.5 text-neutral-100"
           >
             <option value="de">Deutsch</option>
             <option value="en">English</option>
@@ -47,14 +71,14 @@ export const TopNav = () => {
               <span className="hidden text-neutral-300 md:inline">{session.user?.email}</span>
               <button
                 type="button"
-                className="rounded-full border border-neutral-700 px-3 py-1"
+                className="rounded-full border border-[rgba(255,88,0,0.18)] px-3 py-1.5 text-neutral-100 hover:bg-[rgba(255,88,0,0.12)]"
                 onClick={() => signOut({ callbackUrl: "/signin" })}
               >
                 Sign out
               </button>
             </>
           ) : (
-            <Link href="/signin" className="rounded-full border border-neutral-700 px-3 py-1">
+            <Link href="/signin" className="rounded-full border border-[rgba(255,88,0,0.18)] px-3 py-1.5 text-neutral-100 hover:bg-[rgba(255,88,0,0.12)]">
               Sign in
             </Link>
           )}
